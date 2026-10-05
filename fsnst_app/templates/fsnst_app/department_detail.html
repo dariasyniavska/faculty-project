@@ -1,0 +1,49 @@
+{% extends 'fsnst_app/base.html' %}
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'fsnst_app:departments_list' %}">Кафедри</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ department.name }}</li>
+  </ol>
+</nav>
+
+<div class="card shadow p-4 mb-4">
+    <h2>Кафедра: {{ department.name }}</h2>
+    <p class="fs-5"><strong>Завідувач кафедри:</strong> {{ department.head }}</p>
+
+    <h4 class="mt-4">Випускові спеціальності:</h4>
+    <ul>
+        {% for spec in department.specialties.all %}
+            <li><a href="{% url 'fsnst_app:program_detail' spec.pk %}">{{ spec.code }} — {{ spec.name }}</a></li>
+        {% empty %}
+            <li>Спеціальностей немає.</li>
+        {% endfor %}
+    </ul>
+
+    <h4 class="mt-4">Викладацький склад:</h4>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Ім'я</th>
+                    <th>Посада</th>
+                    <th>Науковий ступінь</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in department.teachers.all %}
+                    <tr>
+                        <td>{{ teacher.name }}</td>
+                        <td>{{ teacher.position }}</td>
+                        <td>{{ teacher.degree }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">Викладачів не додано.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
