@@ -1,0 +1,31 @@
+{% extends 'fsnst_app/base.html' %}
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'fsnst_app:programs_list' %}">Спеціальності</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ specialty.name }}</li>
+  </ol>
+</nav>
+
+<div class="card shadow p-4">
+    <h2>{{ specialty.code }} — {{ specialty.name }}</h2>
+    <hr>
+    <h5>Опис:</h5>
+    <p>{{ specialty.description }}</p>
+    
+    <h5 class="mt-3">Випускова кафедра:</h5>
+    <p>{{ specialty.department.name }} (Завідувач: {{ specialty.department.head }})</p>
+
+    <h5 class="mt-3">Список дисциплін, що вивчаються:</h5>
+    <ul>
+        {% for disc in disciplines_list %}
+            <li>{{ disc }}</li>
+        {% empty %}
+            <li>Дисципліни не вказано.</li>
+        {% endfor %}
+    </ul>
+
+    <h5 class="mt-3">Контакти приймальної комісії / координатора:</h5>
+    <p><strong>Координатор:</strong> {{ specialty.coordinator_name }}<br><strong>Контакт:</strong> {{ specialty.coordinator_contact }}</p>
+</div>
+{% endblock %}

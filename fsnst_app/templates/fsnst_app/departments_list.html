@@ -1,0 +1,25 @@
+{% extends 'fsnst_app/base.html' %}
+{% block content %}
+<h2>Кафедри факультету</h2>
+<div class="row mt-3">
+    {% for dept in departments %}
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm p-3">
+                <h3><a href="{% url 'fsnst_app:department_detail' dept.pk %}" class="text-decoration-none">{{ dept.name }}</a></h3>
+                <p class="text-muted"><strong>Завідувач кафедри:</strong> {{ dept.head }}</p>
+                
+                <h5>Випускові спеціальності:</h5>
+                <ul>
+                    {% for spec in dept.specialties.all %}
+                        <li><a href="{% url 'fsnst_app:program_detail' spec.pk %}">{{ spec.name }}</a></li>
+                    {% empty %}
+                        <li>Немає спеціальностей</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% empty %}
+        <p>Кафедри поки не додано.</p>
+    {% endfor %}
+</div>
+{% endblock %}
