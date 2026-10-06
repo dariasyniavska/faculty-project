@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date
 
 
 class Department(models.Model):
@@ -42,3 +43,17 @@ class HomePageContent(models.Model):
     def __str__(self):
         return "Текст головної сторінки"
 
+class ExchangeProgram(models.Model):
+    university_name = models.CharField(max_length=255, verbose_name="Назва університету")
+    country = models.CharField(max_length=100, verbose_name="Країна")
+    languages = models.CharField(max_length=255, verbose_name="Мови навчання")
+    slots = models.CharField(max_length=50, verbose_name="Кількість місць")
+    deadline = models.DateField(verbose_name="Дедлайн подачі")
+    description = models.TextField(verbose_name="Опис")
+
+    @property
+    def is_open(self):
+        return self.deadline >= date.today()
+
+    def __str__(self):
+        return f"{self.university_name} ({self.country})"

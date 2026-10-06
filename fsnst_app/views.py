@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import HomePageContent, Specialty, Department
+from .models import HomePageContent, Specialty, Department, ExchangeProgram
 
 
 def home_view(request):
@@ -28,5 +28,9 @@ def departments_list_view(request):
 def department_detail_view(request, pk):
     department = get_object_or_404(Department, pk=pk)
     return render(request, 'fsnst_app/department_detail.html', {'department': department})
+
+def exchange_list(request):
+    programs = ExchangeProgram.objects.all()
+    return render(request, 'fsnst_app/exchange_list.html', {'programs': programs})
 
 
