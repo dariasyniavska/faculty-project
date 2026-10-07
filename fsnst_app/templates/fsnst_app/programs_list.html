@@ -1,0 +1,15 @@
+{% extends 'fsnst_app/base.html' %}
+{% block content %}
+<h2>Спеціальності факультету</h2>
+<div class="list-group mt-3">
+    {% for spec in specialties %}
+        <div class="list-group-item list-group-item-action mb-3 shadow-sm rounded">
+            <h4><a href="{% url 'fsnst_app:program_detail' spec.pk %}" class="text-decoration-none">{{ spec.code }} — {{ spec.name }}</a></h4>
+            <p>{{ spec.description|truncatewords:50 }}</p>
+            <p class="text-muted mb-0"><strong>Координатор набору:</strong> {{ spec.coordinator_name }} (Контакт: {{ spec.coordinator_contact }})</p>
+        </div>
+    {% empty %}
+        <p>Спеціальності поки не додано. Скористайтеся адмін-панеллю.</p>
+    {% endfor %}
+</div>
+{% endblock %}
